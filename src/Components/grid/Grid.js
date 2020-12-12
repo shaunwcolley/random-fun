@@ -25,7 +25,9 @@ const Grid = ({ x, y, score, setScore}) => {
     const moveRight = useKeyPress("ArrowRight")
     const moveLeft = useKeyPress("ArrowLeft")
     useEffect(() => {
-        
+        if(fruit === cell) {
+            setFruit((Math.floor(Math.random() * (x*y)) +1));
+        }
         if (justMoved.current) {
             setTimeout(() => {
                 justMoved.current = false;
@@ -47,7 +49,7 @@ const Grid = ({ x, y, score, setScore}) => {
         }
 
         if(fruit === cell) {
-            setScore(score +100);
+            setScore(score + 100);
             setFruit((Math.floor(Math.random() * (x*y)) +1));
         }
         
