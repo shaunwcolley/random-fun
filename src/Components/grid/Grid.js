@@ -2,17 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import Cell from '../cell/Cell.js'
 import './Grid.css';
 import useKeyPress from "../../Hooks/useKeyPress";
+import * as fruits from "../constants/fruits.js";
+
+const pickRandomFruit = (fruits) => {
+    let arrayOfFruits = Object.values(fruits);
+    const fruitIndex = Math.floor(Math.random() * arrayOfFruits.length)
+    return arrayOfFruits[fruitIndex];
+}
 
 const Grid = ({ x, y, score, setScore}) => {
     
     // let [count, setCount] = useState(0);
 
     const [cell, setCell] = useState(Math.floor(Math.random() * (x*y)) + 1);
-    const [fruit, setFruit] = useState(Math.floor(Math.random() * (x*y)) + 1);
+    const [fruitCell, setFruitCell] = useState(Math.floor(Math.random() * (x*y)) + 1);
+    const [fruit, setFruit] = useState(pickRandomFruit(fruits));
     const justMoved = useRef(false);
 
     const move = (newCell) => {
-        let fruitCell = fruit;
         if ((newCell > 0) && (newCell < (x * y) + 1)) {
             justMoved.current = true;
             setCell(newCell);
@@ -24,9 +31,10 @@ const Grid = ({ x, y, score, setScore}) => {
     const moveDown = useKeyPress("ArrowDown")
     const moveRight = useKeyPress("ArrowRight")
     const moveLeft = useKeyPress("ArrowLeft")
+
     useEffect(() => {
-        if(fruit === cell) {
-            setFruit((Math.floor(Math.random() * (x*y)) +1));
+        if(fruitCell === cell) {
+            setFruitCell((Math.floor(Math.random() * (x*y)) +1));
         }
         if (justMoved.current) {
             setTimeout(() => {
@@ -34,46 +42,27 @@ const Grid = ({ x, y, score, setScore}) => {
             }, 100);
         } else {
             if (moveUp) {
-                move(cell - x)
+                move(cell - x);
             } else if (moveDown) {
-                move(cell + x)
+                move(cell + x);
             } else if (moveRight) {
                 if (cell % x !== 0) {
-                    move(cell + 1)
+                    move(cell + 1);
                 }
             } else if (moveLeft) {
                 if ((cell % x) !== 1) {
-                    move(cell - 1)
+                    move(cell - 1);
                 }
             }
         }
 
-        if(fruit === cell) {
+        if(fruitCell === cell) {
             setScore(score + 100);
-            setFruit((Math.floor(Math.random() * (x*y)) +1));
+            setFruitCell((Math.floor(Math.random() * (x*y)) +1));
+            setFruit(pickRandomFruit(fruits));
         }
-        
-    }, [cell, move])
-    
-
-    
-
-    // switch(true) {
-    //     case moveUp :
-    //         move(cell - x);
-    //         break;
-    //     case moveDown :
-    //         move(cell + x);
-    //         break;
-    //     case moveRight :
-    //         move(cell + 1);
-    //         break;
-    //     case moveLeft :
-    //         move(cell - 1);
-    //         break;
-    //     default :
-    //     break;
-    // }
+        // eslint-disable-next-line 
+    }, [cell, move]);
 
     const genTableBody = (x,y) => {
         const rows = [];
@@ -84,7 +73,7 @@ const Grid = ({ x, y, score, setScore}) => {
                 let element = "";
                 count += 1;
                 if (count === cell) element = "Character";
-                if (count !== cell && count === fruit) element = "Strawberry";
+                if (count !== cell && count === fruitCell) element = fruit;
                 const el = <td key={`cell ${j}`} ><Cell element={element}/></td>;
                 col.push(el);
             }

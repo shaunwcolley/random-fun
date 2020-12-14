@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Grid from './Components/grid/Grid.js';
 import Score from './Components/score/Score.js';
 import GameOver from './Components/gameover/GameOver.js';
