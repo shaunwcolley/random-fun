@@ -1,5 +1,7 @@
 import React from 'react';
 import Character from '../character/Character';
+import Monster from '../monster/Monster';
+
 import Apple from '../fruit/Apple';
 import Cherry from '../fruit/Cherry';
 import Peach from '../fruit/Peach';
@@ -13,6 +15,8 @@ const Cell = ({ element }) => {
         switch (element) {
             case "Character":
                 return <Character />
+            case "Monster":
+                return <Monster />
             case fruit.APPLE:
                 return <Apple />
             case fruit.CHERRY:

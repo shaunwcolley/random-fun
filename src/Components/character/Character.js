@@ -1,7 +1,6 @@
 import React from 'react';
 
-const Character = (/*props*/) => {
-    // const { bool } = props
+const Character = () => {
     return (
     <>: D</>
     

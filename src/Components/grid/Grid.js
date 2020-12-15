@@ -10,11 +10,12 @@ const pickRandomFruit = (fruits) => {
     return arrayOfFruits[fruitIndex];
 }
 
-const Grid = ({ x, y, score, setScore}) => {
+const Grid = ({ x, y, score, setScore, status, setStatus}) => {
     
     // let [count, setCount] = useState(0);
 
     const [cell, setCell] = useState(Math.floor(Math.random() * (x*y)) + 1);
+    const [monsterCell, setMonsterCell] = useState(Math.floor(Math.random() * (x*y)) + 1);
     const [fruitCell, setFruitCell] = useState(Math.floor(Math.random() * (x*y)) + 1);
     const [fruit, setFruit] = useState(pickRandomFruit(fruits));
     const justMoved = useRef(false);
@@ -36,6 +37,9 @@ const Grid = ({ x, y, score, setScore}) => {
         if(fruitCell === cell) {
             setFruitCell((Math.floor(Math.random() * (x*y)) +1));
         }
+        if(monsterCell === cell) {
+            setMonsterCell((Math.floor(Math.random() * (x*y)) +1));
+        }
         if (justMoved.current) {
             setTimeout(() => {
                 justMoved.current = false;
@@ -55,7 +59,9 @@ const Grid = ({ x, y, score, setScore}) => {
                 }
             }
         }
-
+        if(monsterCell === cell) {
+            setStatus(false);
+        }
         if(fruitCell === cell) {
             setScore(score + 100);
             setFruitCell((Math.floor(Math.random() * (x*y)) +1));
@@ -74,6 +80,7 @@ const Grid = ({ x, y, score, setScore}) => {
                 count += 1;
                 if (count === cell) element = "Character";
                 if (count !== cell && count === fruitCell) element = fruit;
+                if (count !== cell && count === monsterCell) element = "Monster";
                 const el = <td key={`cell ${j}`} ><Cell element={element}/></td>;
                 col.push(el);
             }
