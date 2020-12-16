@@ -23,27 +23,69 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
     const move = (newCell) => {
         if ((newCell > 0) && (newCell < (x * y) + 1)) {
             justMoved.current = true;
+            monsterMove();
             setCell(newCell);
         }
     };
 
-    
+    const monsterMove = () => {
+        // console.log("charcell",cell);
+        // console.log("monsterCell", monsterCell);
+        const directionChoice = Math.floor(Math.random() *2);
+        if (cell < monsterCell && cell < (monsterCell - 10)) {
+            if (directionChoice === 0) {
+                setMonsterCell(monsterCell-1)
+            } else {
+                setMonsterCell(monsterCell-10)
+            }
+        } else if (cell > monsterCell && cell > (monsterCell +10)){
+            console.log(directionChoice)
+            if (directionChoice === 0) {
+                setMonsterCell(monsterCell-1)
+            } else {
+                setMonsterCell(monsterCell+10)
+            }
+        } else if (cell > monsterCell){
+            console.log(directionChoice)
+            if (directionChoice === 0) {
+                setMonsterCell(monsterCell+1)
+            } else {
+                setMonsterCell(monsterCell+10)
+            }
+         } else {
+            console.log(directionChoice)
+            if (directionChoice === 0) {
+                setMonsterCell(monsterCell+1)
+            } else {
+                setMonsterCell(monsterCell-10)
+            }
+            
+        }
+    }
+
     const moveUp =  useKeyPress("ArrowUp")
     const moveDown = useKeyPress("ArrowDown")
     const moveRight = useKeyPress("ArrowRight")
     const moveLeft = useKeyPress("ArrowLeft")
 
     useEffect(() => {
+
+        
+
         if(fruitCell === cell) {
             setFruitCell((Math.floor(Math.random() * (x*y)) +1));
         }
+
         if(monsterCell === cell) {
             setMonsterCell((Math.floor(Math.random() * (x*y)) +1));
         }
+
         if (justMoved.current) {
+
             setTimeout(() => {
                 justMoved.current = false;
             }, 100);
+
         } else {
             if (moveUp) {
                 move(cell - x);
@@ -59,33 +101,42 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
                 }
             }
         }
+
         if(monsterCell === cell) {
             setStatus(false);
         }
+
         if(fruitCell === cell) {
             setScore(score + 100);
             setFruitCell((Math.floor(Math.random() * (x*y)) +1));
             setFruit(pickRandomFruit(fruits));
         }
+
         // eslint-disable-next-line 
     }, [cell, move]);
 
     const genTableBody = (x,y) => {
         const rows = [];
         let count = 0;
+
         for(let i = 0; i < y; i+=1) {
             let col = [];
+
             for (let j = 0; j < x; j+=1) {
                 let element = "";
                 count += 1;
+
                 if (count === cell) element = "Character";
                 if (count !== cell && count === fruitCell) element = fruit;
                 if (count !== cell && count === monsterCell) element = "Monster";
+
                 const el = <td key={`cell ${j}`} ><Cell element={element}/></td>;
                 col.push(el);
             }
+
             rows.push(<tr key={`row ${i}`}>{col}</tr>)
         }
+
         return rows;
     };
 
