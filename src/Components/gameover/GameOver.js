@@ -1,11 +1,11 @@
 import React from 'react';
 
-const GameOver = ({ againClick, status }) => {
+const GameOver = ({ againClick, health }) => {
     const handleSubmitClick = () => {
         return againClick();
     }
     return <>
-            <h1>{status ? "You Win!!" : "Game Over"}</h1>
+            <h1>{health ? "You Win!!" : "Game Over"}</h1>
             <div>
                 <button onClick={() => handleSubmitClick()}>Play Again?</button>
             </div>

@@ -26,7 +26,7 @@ const pickSpikeCell = (x,y,spikeCount) => {
     return spikeCells;
 }
 
-const Grid = ({ x, y, score, setScore, status, setStatus}) => {
+const Grid = ({ x, y, score, setScore, health, setHealth}) => {
     
     // let [count, setCount] = useState(0);
 
@@ -34,22 +34,22 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
     const [monsterCell, setMonsterCell] = useState(pickRandomCell(x,y));
     const [fruitCell, setFruitCell] = useState(pickRandomCell(x,y));
     const [fruit, setFruit] = useState(pickRandomFruit(fruits));
-    const [spikeCount, setSpikeCount] = useState(3);
-    const [spikeCell, setSpikeCell] = useState(pickSpikeCell(x,y,spikeCount))
+    const [spikeCount] = useState(3);
+    const [spikeCell] = useState(pickSpikeCell(x,y,spikeCount))
 
     const justMoved = useRef(false);
 
     const move = (newCell) => {
         if ((newCell > 0) && (newCell < (x * y) + 1)) {
             justMoved.current = true;
-            monsterMove();
+            if (monsterCell !== newCell) {
+                monsterMove();
+            }
             setCell(newCell);
         }
     };
 
     const monsterMove = () => {
-        // console.log("charcell",cell);
-        // console.log("monsterCell", monsterCell);
         const directionChoice = Math.floor(Math.random() *2);
         if (cell < monsterCell && cell < (monsterCell - 10)) {
             if (directionChoice === 0) {
@@ -96,6 +96,14 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
             setMonsterCell(pickRandomCell(x,y));
         }
 
+        if(spikeCell[fruitCell]) {
+            setFruitCell(pickRandomCell(x,y))
+        }
+
+        if(spikeCell[cell]) {
+            setCell(pickRandomCell(x,y))
+        }
+        
         if (justMoved.current) {
 
             setTimeout(() => {
@@ -118,8 +126,20 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
             }
         }
 
+        if(spikeCell[monsterCell]) {
+            setMonsterCell(x*y);
+        }
+
         if(monsterCell === cell) {
-            setStatus(false);
+            setHealth(health - 1);
+            setCell(1);
+            setMonsterCell(x*y);
+        }
+
+        if(spikeCell[cell]) {
+            setHealth(health - 1);
+            setCell(1);
+            setMonsterCell(x*y);
         }
 
         if(fruitCell === cell) {
