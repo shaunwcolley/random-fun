@@ -10,14 +10,33 @@ const pickRandomFruit = (fruits) => {
     return arrayOfFruits[fruitIndex];
 }
 
+const pickRandomCell = (x,y) => {
+    return Math.floor(Math.random() * (x*y)) + 1;
+}
+
+const pickSpikeCell = (x,y,spikeCount) => {
+    let spikeCells = {}
+    for(let i = 0; i < spikeCount; i++) {
+        let cell = pickRandomCell(x,y);
+        while (cell === spikeCells[cell]) {
+            cell = pickRandomCell(x,y)
+        }
+        spikeCells[cell] = cell;
+    }
+    return spikeCells;
+}
+
 const Grid = ({ x, y, score, setScore, status, setStatus}) => {
     
     // let [count, setCount] = useState(0);
 
-    const [cell, setCell] = useState(Math.floor(Math.random() * (x*y)) + 1);
-    const [monsterCell, setMonsterCell] = useState(Math.floor(Math.random() * (x*y)) + 1);
-    const [fruitCell, setFruitCell] = useState(Math.floor(Math.random() * (x*y)) + 1);
+    const [cell, setCell] = useState(pickRandomCell(x,y));
+    const [monsterCell, setMonsterCell] = useState(pickRandomCell(x,y));
+    const [fruitCell, setFruitCell] = useState(pickRandomCell(x,y));
     const [fruit, setFruit] = useState(pickRandomFruit(fruits));
+    const [spikeCount, setSpikeCount] = useState(3);
+    const [spikeCell, setSpikeCell] = useState(pickSpikeCell(x,y,spikeCount))
+
     const justMoved = useRef(false);
 
     const move = (newCell) => {
@@ -39,21 +58,18 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
                 setMonsterCell(monsterCell-10)
             }
         } else if (cell > monsterCell && cell > (monsterCell +10)){
-            console.log(directionChoice)
             if (directionChoice === 0) {
                 setMonsterCell(monsterCell-1)
             } else {
                 setMonsterCell(monsterCell+10)
             }
         } else if (cell > monsterCell){
-            console.log(directionChoice)
             if (directionChoice === 0) {
                 setMonsterCell(monsterCell+1)
             } else {
                 setMonsterCell(monsterCell+10)
             }
          } else {
-            console.log(directionChoice)
             if (directionChoice === 0) {
                 setMonsterCell(monsterCell+1)
             } else {
@@ -73,11 +89,11 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
         
 
         if(fruitCell === cell) {
-            setFruitCell((Math.floor(Math.random() * (x*y)) +1));
+            setFruitCell(pickRandomCell(x,y));
         }
 
         if(monsterCell === cell) {
-            setMonsterCell((Math.floor(Math.random() * (x*y)) +1));
+            setMonsterCell(pickRandomCell(x,y));
         }
 
         if (justMoved.current) {
@@ -108,7 +124,7 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
 
         if(fruitCell === cell) {
             setScore(score + 100);
-            setFruitCell((Math.floor(Math.random() * (x*y)) +1));
+            setFruitCell(pickRandomCell(x,y));
             setFruit(pickRandomFruit(fruits));
         }
 
@@ -129,7 +145,7 @@ const Grid = ({ x, y, score, setScore, status, setStatus}) => {
                 if (count === cell) element = "Character";
                 if (count !== cell && count === fruitCell) element = fruit;
                 if (count !== cell && count === monsterCell) element = "Monster";
-
+                if (count !== cell && count === spikeCell[count] && count !== monsterCell && count !== fruitCell) element = "Spike";
                 const el = <td key={`cell ${j}`} ><Cell element={element}/></td>;
                 col.push(el);
             }

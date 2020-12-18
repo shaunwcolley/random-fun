@@ -1,10 +1,7 @@
 import React from 'react';
 
 const Character = () => {
-    return (
-    <>: D</>
-    
-    )
+    return <>: D</>
 }
 
 export default Character;
