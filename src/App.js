@@ -38,17 +38,6 @@ function App() {
 
   return <>
           {elementCheck(gameStatus,health)}
-          {/* {
-            scoreState < 1000 && health ? 
-              <Grid 
-                setScore={setScore} 
-                score={scoreState} 
-                x={10} y={10} 
-                health={health} 
-                setHealth={setHealth} 
-              /> : 
-              <GameOver againClick={againClick} health={health} />
-          } */}
           <HealthBar health={health}/>
           <Score score={scoreState} />
         </>
