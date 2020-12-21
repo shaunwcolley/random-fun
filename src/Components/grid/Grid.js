@@ -45,37 +45,37 @@ const Grid = ({ x, y, score, setScore, health, setHealth}) => {
             if (monsterCell !== newCell) {
                 monsterMove();
             }
-            setCell(newCell);
+            return setCell(newCell);
         }
+        return;
     };
 
     const monsterMove = () => {
         const directionChoice = Math.floor(Math.random() *2);
         if (cell < monsterCell && cell < (monsterCell - 10)) {
             if (directionChoice === 0) {
-                setMonsterCell(monsterCell-1)
+                setMonsterCell(monsterCell-1);
             } else {
-                setMonsterCell(monsterCell-10)
+                setMonsterCell(monsterCell-10);
             }
         } else if (cell > monsterCell && cell > (monsterCell +10)){
             if (directionChoice === 0) {
-                setMonsterCell(monsterCell-1)
+                setMonsterCell(monsterCell-1);
             } else {
-                setMonsterCell(monsterCell+10)
+                setMonsterCell(monsterCell+10);
             }
         } else if (cell > monsterCell){
             if (directionChoice === 0) {
-                setMonsterCell(monsterCell+1)
+                setMonsterCell(monsterCell+1);
             } else {
-                setMonsterCell(monsterCell+10)
+                setMonsterCell(monsterCell+10);
             }
          } else {
             if (directionChoice === 0) {
-                setMonsterCell(monsterCell+1)
+                setMonsterCell(monsterCell+1);
             } else {
-                setMonsterCell(monsterCell-10)
+                setMonsterCell(monsterCell-10);
             }
-            
         }
     }
 
