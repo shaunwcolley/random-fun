@@ -2,7 +2,7 @@ import React from 'react';
 
 const GameOver = ({ againClick, health }) => {
     const handleSubmitClick = () => {
-        return againClick();
+        return againClick("play");
     }
     return <>
             <h1>{health ? "You Win!!" : "Game Over"}</h1>
