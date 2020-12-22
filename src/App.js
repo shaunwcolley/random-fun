@@ -5,6 +5,27 @@ import GameOver from './Components/gameover/GameOver.js';
 import HealthBar from './Components/healthBar/HealthBar.js';
 import HomeScreen from './Components/homeScreen/HomeScreen.js';
 
+export const elementCheck = (gameStatus, health, setHealth, againClick, scoreState, setScore) => {
+  if(health && scoreState < 1000) {
+    switch (gameStatus) {
+        case "start":
+          return <HomeScreen againClick={againClick}/>
+        case "play":
+          return <Grid 
+            setScore={setScore} 
+            score={scoreState} 
+            x={10} y={10} 
+            health={health} 
+            setHealth={setHealth} 
+          />
+        default:
+            return <GameOver againClick={againClick} health={health}  />
+    }
+  } else {
+    return <GameOver againClick={againClick} health={health}  />
+  }
+}
+
 function App() {
   let [scoreState, setScore] = React.useState(0);
   let [gameStatus, setgameStatus] = React.useState("start");
@@ -15,29 +36,8 @@ function App() {
     return setScore(0);
   }
 
-  const elementCheck = (gameStatus, health) => {
-    if(health) {
-      switch (gameStatus) {
-          case "start":
-            return <HomeScreen againClick={againClick}/>
-          case "play":
-            return <Grid 
-              setScore={setScore} 
-              score={scoreState} 
-              x={10} y={10} 
-              health={health} 
-              setHealth={setHealth} 
-            />
-          default:
-              return <GameOver againClick={againClick} health={health}  />
-      }
-    } else {
-      return <GameOver againClick={againClick} health={health}  />
-    }
-  }
-
   return <>
-          {elementCheck(gameStatus,health)}
+          {elementCheck(gameStatus, health, setHealth, againClick, scoreState, setScore)}
           <HealthBar health={health}/>
           <Score score={scoreState} />
         </>
