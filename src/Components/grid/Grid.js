@@ -26,7 +26,7 @@ const pickSpikeCell = (x,y,spikeCount) => {
     return spikeCells;
 }
 
-const Grid = ({ x, y, score, setScore, health, setHealth}) => {
+const Grid = ({ x, y, score, setScore, health, setHealth, levelOn}) => {
     
     // let [count, setCount] = useState(0);
 
@@ -177,6 +177,8 @@ const Grid = ({ x, y, score, setScore, health, setHealth}) => {
     };
 
     return (
+        <>
+        <h4>Level {levelOn}</h4>
         <table>
             <thead>
             </thead>
@@ -184,6 +186,7 @@ const Grid = ({ x, y, score, setScore, health, setHealth}) => {
                 {genTableBody(x,y)}
             </tbody>
         </table>
+        </>
     );
 };
 

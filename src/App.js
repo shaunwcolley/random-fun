@@ -5,18 +5,19 @@ import GameOver from './Components/gameover/GameOver.js';
 import HealthBar from './Components/healthBar/HealthBar.js';
 import HomeScreen from './Components/homeScreen/HomeScreen.js';
 
-export const elementCheck = (gameStatus, health, setHealth, againClick, scoreState, setScore) => {
-  if(health && scoreState < 1000) {
+export const elementCheck = (gameStatus, health, setHealth, againClick, scoreState, setScore, levelOn,levelTotal) => {
+  if(health && (scoreState < 1000) && (levelOn <= levelTotal)) {
     switch (gameStatus) {
         case "start":
           return <HomeScreen againClick={againClick}/>
         case "play":
           return <Grid 
-            setScore={setScore} 
-            score={scoreState} 
-            x={10} y={10} 
-            health={health} 
-            setHealth={setHealth} 
+            setScore={setScore}
+            score={scoreState}
+            x={10} y={10}
+            health={health}
+            setHealth={setHealth}
+            levelOn={levelOn}
           />
         default:
             return <GameOver againClick={againClick} health={health}  />
@@ -28,7 +29,7 @@ export const elementCheck = (gameStatus, health, setHealth, againClick, scoreSta
 
 function App() {
   let [scoreState, setScore] = React.useState(0);
-  let [levelCount, setLevelCount] = React.useState(1);
+  let [levelOn, setLevelOn] = React.useState(1);
   let [levelTotal, setLevelTotal] = React.useState(2);
   let [gameStatus, setgameStatus] = React.useState("start");
   let [health, setHealth] = React.useState(3);
@@ -39,7 +40,7 @@ function App() {
   }
 
   return <>
-          {elementCheck(gameStatus, health, setHealth, againClick, scoreState, setScore)}
+          {elementCheck(gameStatus, health, setHealth, againClick, scoreState, setScore, levelOn, levelTotal)}
           <HealthBar health={health}/>
           <Score score={scoreState} />
         </>
