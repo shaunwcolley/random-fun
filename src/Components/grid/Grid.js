@@ -26,7 +26,7 @@ const pickSpikeCell = (x,y,spikeCount) => {
     return spikeCells;
 }
 
-const Grid = ({ x, y, score, setScore, health, setHealth, levelOn}) => {
+const Grid = ({ x, y, score, setScore, health, setHealth, levelOn, setLevelOn}) => {
     
     // let [count, setCount] = useState(0);
 
@@ -34,8 +34,8 @@ const Grid = ({ x, y, score, setScore, health, setHealth, levelOn}) => {
     const [monsterCell, setMonsterCell] = useState(pickRandomCell(x,y));
     const [fruitCell, setFruitCell] = useState(pickRandomCell(x,y));
     const [fruit, setFruit] = useState(pickRandomFruit(fruits));
-    const [spikeCount] = useState(3);
-    const [spikeCell] = useState(pickSpikeCell(x,y,spikeCount))
+    const [spikeCount, setSpikeCount] = useState(3 * levelOn);
+    const [spikeCell, setSpikeCell] = useState(pickSpikeCell(x,y,spikeCount))
 
     const justMoved = useRef(false);
 
@@ -146,6 +146,16 @@ const Grid = ({ x, y, score, setScore, health, setHealth, levelOn}) => {
             setScore(score + 100);
             setFruitCell(pickRandomCell(x,y));
             setFruit(pickRandomFruit(fruits));
+        }
+
+        if (score === (levelOn * 1000)) {
+            setLevelOn(levelOn + 1);
+            setSpikeCount((levelOn+1) * 3);
+            if(spikeCount < 9) {
+                setSpikeCell(pickSpikeCell(x,y,(levelOn+1) * 3));
+            }
+            setCell(1);
+            setMonsterCell(x*y);
         }
 
         // eslint-disable-next-line 
