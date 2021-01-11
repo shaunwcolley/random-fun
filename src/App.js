@@ -31,7 +31,7 @@ export const elementCheck = (gameStatus, health, setHealth, againClick, scoreSta
 function App() {
   let [scoreState, setScore] = React.useState(0);
   let [levelOn, setLevelOn] = React.useState(2);
-  let [levelTotal, setLevelTotal] = React.useState(2);
+  let [levelTotal] = React.useState(2);
   let [gameStatus, setgameStatus] = React.useState("start");
   let [health, setHealth] = React.useState(3);
   const againClick = (status) => {
