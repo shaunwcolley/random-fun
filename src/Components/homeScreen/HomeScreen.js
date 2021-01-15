@@ -1,14 +1,17 @@
 import React from 'react';
 
 const HomeScreen = ({ againClick, setLevelTotal }) => {
+
+    let [scoreNeeded, setScoreNeeded] = React.useState(1000);
+
     const handleSubmitClick = () => {
         return againClick("play");
     }
 
     const handleInputChange = (event) => {
         if(event) {
-            console.log(event.target.value);
-            setLevelTotal(event.target.value)
+            setLevelTotal(event.target.value);
+            setScoreNeeded(event.target.value * 1000);
         }
     }
 
@@ -28,8 +31,13 @@ const HomeScreen = ({ againClick, setLevelTotal }) => {
                 <p>Collect Fruit!</p>
                 <p>Win!</p>
             </div>
+            <div>
                 <p>How many levels do you want to play?</p>
                 <select onChange={handleInputChange}>{options()}</select>
+            </div>
+            <div>
+                Score needed to win: {scoreNeeded} points.
+            </div>
             <div>
                 <button onClick={() => handleSubmitClick()}>Play Game?</button>
             </div>

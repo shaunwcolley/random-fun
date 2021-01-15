@@ -6,7 +6,6 @@ import HealthBar from './Components/healthBar/HealthBar.js';
 import HomeScreen from './Components/homeScreen/HomeScreen.js';
 
 export const elementCheck = (gameStatus, health, setHealth, againClick, scoreState, setScore, levelOn, setLevelOn, levelTotal, setLevelTotal) => {
-  console.log(levelOn, levelTotal)
   if(health && (levelOn <= levelTotal)) {
     switch (gameStatus) {
         case "start":
