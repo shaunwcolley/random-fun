@@ -4,6 +4,7 @@ import Score from './Components/score/Score.js';
 import GameOver from './Components/gameover/GameOver.js';
 import HealthBar from './Components/healthBar/HealthBar.js';
 import HomeScreen from './Components/homeScreen/HomeScreen.js';
+import './App.css';
 
 export const elementCheck = (gameStatus, health, setHealth, againClick, scoreState, setScore, levelOn, setLevelOn, levelTotal, setLevelTotal) => {
   if(health && (levelOn <= levelTotal)) {
@@ -41,11 +42,11 @@ function App() {
     return setScore(0);
   }
 
-  return <>
+  return <div className="App-wrapper">
           {elementCheck(gameStatus, health, setHealth, againClick, scoreState, setScore, levelOn, setLevelOn, levelTotal, setLevelTotal)}
           <HealthBar health={health}/>
           <Score score={scoreState} />
-        </>
+        </div>
 }
 
 export default App;
