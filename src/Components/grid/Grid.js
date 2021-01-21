@@ -36,6 +36,7 @@ const Grid = ({ x, y, score, setScore, health, setHealth, levelOn, setLevelOn}) 
     const [fruit, setFruit] = useState(pickRandomFruit(fruits));
     const [spikeCount, setSpikeCount] = useState(3 * levelOn);
     const [spikeCell, setSpikeCell] = useState(pickSpikeCell(x,y,spikeCount))
+    const [walkerCell, setWalkerCell] = useState(0)
 
     const justMoved = useRef(false);
 
