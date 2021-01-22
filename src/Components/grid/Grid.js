@@ -40,7 +40,7 @@ const Grid = ({ x, y, score, setScore, health, setHealth, levelOn, setLevelOn}) 
 
     const justMoved = useRef(false);
 
-    const move = (newCell) => {
+    const walkerMove = (newCell) => {
         if ((newCell > 0) && (newCell < (x * y) + 1)) {
             justMoved.current = true;
             if (monsterCell !== newCell) {
@@ -50,6 +50,10 @@ const Grid = ({ x, y, score, setScore, health, setHealth, levelOn, setLevelOn}) 
         }
         return;
     };
+
+    const walkerMove = () => {
+        console.log("walkerCell", walkerCell)
+    }
 
     const monsterMove = () => {
         const directionChoice = Math.floor(Math.random() *2);
